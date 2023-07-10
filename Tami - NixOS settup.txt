@@ -1,0 +1,27 @@
+# INSTALL WSL2 PROPERLY (make sure with ubuntu installed), also WindowsTerminal
+
+# Install NixOS on wsl
+## download latest release: https://github.com/nix-community/NixOS-WSL/releases/latest
+## navigate to the downloads folder and run (from the folder you to save the os files) :
+wsl --import nixos .\NixOS\ nixos-wsl-installer.tar.gz --version 2
+## Start nixos
+wsl -d NixOS #(if hangs at starting systemd, quit Ctrl+c, wsl --shutdown, & retry)
+## add (matching ie 22.05) channel for home manager
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager && 
+sudo nix-channel --update &&
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager && 
+sudo nix-channel --update 
+#sudo nix-shell '<home-manager>' -A install
+
+# Clone and copy NixOS configuration files to /etc/nixos/
+
+# Build nixos
+sudo nixos-rebuild switch
+
+# change user's passwords
+sudo su
+passwd magic
+passwd root
+
+# see that env is ready
+
